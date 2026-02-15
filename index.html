@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti 💚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-pink: #ff0080;
+            --neon-blue: #00d4ff;
+            --purple: #8b5cf6;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.95);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Efecto de grid futurista */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+        
+        .page {
+            position: absolute;
+            width: 90%;
+            max-width: 500px;
+            min-height: 300px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 
+                0 0 40px rgba(0, 255, 136, 0.2),
+                0 0 80px rgba(139, 92, 246, 0.15),
+                inset 0 0 60px rgba(0, 255, 136, 0.05);
+            padding: 40px 35px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            transform: scale(0.9);
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .page h1, .page h2 {
+            color: #ffffff;
+            margin: 0 0 25px 0;
+            line-height: 1.6;
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue), var(--neon-pink));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+            text-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.5),
+                0 0 40px rgba(0, 255, 136, 0.3);
+            filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.4));
+        }
+        
+        .page h1 {
+            font-size: 1.8em;
+        }
+        
+        .page h2 {
+            font-size: 1.4em;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--dark-bg);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.5),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.8),
+                0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* Estrellas flotantes */
+        .star {
+            position: absolute;
+            color: var(--neon-pink);
+            font-size: 20px;
+            opacity: 0;
+            animation: float-star 4s ease-in-out infinite;
+            pointer-events: none;
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+        
+        @keyframes float-star {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+        
+        /* Corazones flotantes */
+        .heart {
+            position: absolute;
+            color: var(--neon-pink);
+            font-size: 25px;
+            opacity: 0;
+            animation: float-heart 5s ease-in-out infinite;
+            pointer-events: none;
+            filter: drop-shadow(0 0 8px var(--neon-pink));
+        }
+        
+        @keyframes float-heart {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.2) rotate(360deg);
+            }
+        }
+        
+        /* Elementos decorativos tipo Feid/Álvaro Díaz */
+        .deco-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .deco-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            background: radial-gradient(circle, var(--neon-green), transparent);
+        }
+        
+        .deco-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            background: radial-gradient(circle, var(--neon-pink), transparent);
+            animation-delay: 1s;
+        }
+        
+        .deco-element:nth-child(3) {
+            bottom: 10%;
+            left: 20%;
+            background: radial-gradient(circle, var(--neon-blue), transparent);
+            animation-delay: 2s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.2;
+            }
+        }
+        
+        /* Efecto de partículas */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-float 3s linear infinite;
+            box-shadow: 0 0 5px var(--neon-green);
+        }
+        
+        @keyframes particle-float {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(100px);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .page h1 {
+                font-size: 1.4em;
+            }
+            .page h2 {
+                font-size: 1.1em;
+            }
+            button {
+                padding: 12px 28px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Elementos decorativos de fondo -->
+    <div class="deco-element"></div>
+    <div class="deco-element"></div>
+    <div class="deco-element"></div>
+    
+    <div id="page1" class="page">
+        <h1>✨ Hola Nahomi ✨<br>tengo un mensaje súper importante para ti 💚</h1>
+        <button onclick="nextPage()">Dale 🔥</button>
+    </div>
+    
+    <div id="page2" class="page">
+        <h2>Eres inteligente 🧠<br>aunque no haya visto tus apuntes,<br>se nota en cómo escribes</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page3" class="page">
+        <h2>Tu forma de ser es fuerte 💪<br>se siente hasta por la pantalla</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page4" class="page">
+        <h2>Bonita ✨<br>no hace falta verte para saberlo,<br>lo transmites</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page5" class="page">
+        <h2>Y graciosa 😄<br>siempre me sacas una sonrisa<br>sin querer</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page6" class="page">
+        <h2>Tu concentración al estudiar 📚<br>Nahomi, es admirable</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page7" class="page">
+        <h2>No cualquiera se mete<br>a instalar redes 🔌<br>tienes valor</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page8" class="page">
+        <h2>Y cuando acabes,<br>vas a saber conectar<br>más que cables 💫</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page9" class="page">
+        <h2>Te imagino con la bata de trabajo 👷‍♀️<br>orgullosa de cada paso</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page10" class="page">
+        <h2>Ya eres ejemplo 🌟<br>aunque no lo veas</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page11" class="page">
+        <h2>Me caes bien, Nahomi 😊<br>Mucho</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page12" class="page">
+        <h2>Por cómo me escuchas 👂<br>sé que vas a llegar lejos</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page13" class="page">
+        <h2>Tu forma de preguntar 🤔<br>curiosa, sin miedo a no saber</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page14" class="page">
+        <h2>Me gusta que existas 💚</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page15" class="page">
+        <h2>Y que no te rindas 💪<br>ni con el cansancio</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page16" class="page">
+        <h2>Sabes, a veces me das envidia 😌<br>pero buena</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page17" class="page">
+        <h2>Tu energía ⚡<br>aunque no nos hayamos visto…<br>se siente</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page18" class="page">
+        <h2>No necesito más<br>para saber que vales oro 🏆</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page19" class="page">
+        <h2>Que no cambies nunca 💫<br>Nahomi</h2>
+        <button onclick="nextPage()">Siguiente ⭐</button>
+    </div>
+    
+    <div id="page20" class="page">
+        <h2>Te quiero mucho 💚💚💚<br><br>Siempre voy a estar aquí<br>para lo que necesites 🤝<br><br>Creo en ti ✨<br>Sé que vas a llegar súper lejos 🚀<br><br>Estoy orgulloso de ti 🌟</h2>
+    </div>
+
+    <script>
+        let current = 1;
+        
+        // Mostrar la primera página al cargar
+        document.getElementById('page1').classList.add('active');
+        
+        function nextPage() {
+            document.getElementById('page' + current).classList.remove('active');
+            current++;
+            if (current <= 20) {
+                setTimeout(() => {
+                    document.getElementById('page' + current).classList.add('active');
+                }, 100);
+            }
+        }
+        
+        // Crear estrellas flotantes
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.innerHTML = '⭐';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            star.style.fontSize = (15 + Math.random() * 15) + 'px';
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 4000);
+        }
+        
+        // Crear corazones flotantes
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💚';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.fontSize = (20 + Math.random() * 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        
+        // Crear partículas
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            const colors = ['var(--neon-green)', 'var(--neon-pink)', 'var(--neon-blue)'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = color;
+            particle.style.boxShadow = `0 0 5px ${color}`;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 3000);
+        }
+        
+        // Intervalos para crear elementos
+        setInterval(createStar, 600);
+        setInterval(createHeart, 800);
+        setInterval(createParticle, 300);
+        
+        // Efecto de entrada inicial
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
